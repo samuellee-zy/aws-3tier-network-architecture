@@ -75,29 +75,22 @@ jobs:
       - name: Set TFC_API_TOKEN env
         run: echo "TF_API_TOKEN=${{ steps.secretdata.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
 
-      - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.0
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.0
         id: upload
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
 
-      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
-        id: run
-        ## run may fail, if so continue to output PR comment
-        ## step.terraform-cloud-check-run-status will fail job after pr comment is created/updated.
+      - name: Create Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.0
+        id: create-run
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
-          ## OPTIONAL: set your own message for run. A default message will be defined for you.
-          ## Example:
-          # message: "Triggered From GitHub Actions CI ${{ github.sha }}"
 
-      - uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.3.0
-        id: plan-output
-        with:
-          plan: ${{ steps.run.outputs.plan_id }}
-
-      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
+      - name: Apply Run
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.0
         id: apply
         if: ${{ fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable }}
         with:
