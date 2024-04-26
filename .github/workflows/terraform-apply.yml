@@ -86,11 +86,9 @@ jobs:
         id: run
         ## run may fail, if so continue to output PR comment
         ## step.terraform-cloud-check-run-status will fail job after pr comment is created/updated.
-        continue-on-error: true
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
-          plan_only: true
           ## OPTIONAL: set your own message for run. A default message will be defined for you.
           ## Example:
           # message: "Triggered From GitHub Actions CI ${{ github.sha }}"
