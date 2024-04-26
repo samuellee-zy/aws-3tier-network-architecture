@@ -51,7 +51,7 @@ jobs:
           secrets: ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.VAULT_SECRET_KEY }} | TF_API_TOKEN
 
       - name: Set TFC_API_TOKEN env
-          run: echo ${{ steps.secretdata.outputs.TF_API_TOKEN }} >> $TF_API_TOKEN
+          run: echo "TF_API_TOKEN=${{ steps.secretdata.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
 
       - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.0
         id: upload
