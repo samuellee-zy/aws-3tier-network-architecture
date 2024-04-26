@@ -11,11 +11,11 @@ name: Terraform Cloud Speculative Run
 on:
   pull_request:
     branches:
-    ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
+      ## RECOMMENDED: Change for your target branch, or include branches you wish to trigger this workflow file.
       - main
     ## RECOMMENDED: Specify to only run this workflow file when terraform configuration has changed.
     #paths:
-      #- "<<INPUT REQUIRED>>" ## Example: 'terraform/**.tf'
+    #- "<<INPUT REQUIRED>>" ## Example: 'terraform/**.tf'
 
 ## Add shared Environment Variables across jobs here ##
 env:
