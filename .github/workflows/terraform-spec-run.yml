@@ -17,6 +17,10 @@ on:
     #paths:
     #- "<<INPUT REQUIRED>>" ## Example: 'terraform/**.tf'
 
+permissions:
+  id-token: write
+  contents: read
+
 ## Add shared Environment Variables across jobs here ##
 env:
   TF_CLOUD_ORGANIZATION: "samuellee-dev" ## Name of your existing Terraform Cloud Organization. RECOMMENDED: use repository variables. ex. "${{ vars.TF_CLOUD_ORGANIZATION }}"
