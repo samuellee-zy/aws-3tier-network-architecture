@@ -52,6 +52,9 @@ jobs:
           echo 'GitHub Actions Token Claims'
           cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
 
+          echo $VAULT_URL
+          echo $VAULT_ROLE
+
           echo 'Vault Login Response'
           curl -sSLf -X POST -H "Content-Type: application/json" -H "X-Vault-Namespace: admin" --data @token.json $VAULT_URL/v1/auth/$VAULT_AUTH_PATH/login
 
