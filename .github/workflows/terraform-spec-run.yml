@@ -23,9 +23,9 @@ env:
   #TF_API_TOKEN: "${{ secrets.VAULT_SECRET_KEY }}" ## Terraform Cloud API Token. RECOMMENDED: replace with github action secrets. ex. "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "aws-network-architecture-test" ## Name of your existing workspace in Terraform Cloud.
   CONFIG_DIRECTORY: "./" ## Directory of your Terraform Configuration. Relative to the project root.
-  VAULT_URL: ${{ secrets.VAULT_ADDR }}
-  VAULT_AUTH_PATH: jwt
-  VAULT_ROLE: ${{ secrets.VAULT_ROLE }}
+  # VAULT_URL: ${{ secrets.VAULT_ADDR }}
+  # VAULT_AUTH_PATH: jwt
+  # VAULT_ROLE: ${{ secrets.VAULT_ROLE }}
   ## Additional env variables
   # TF_LOG: DEBUG ## Helpful for troubleshooting
   # TF_MAX_TIMEOUT: "30m" ## If you wish to override the default "1h"
@@ -39,6 +39,24 @@ jobs:
     #  TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORG }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: Troubleshooting
+      run: |
+          curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | \
+          jq "{ jwt: .value, role: \"$VAULT_ROLE\" }" > ./token.json
+            
+          echo 'GitHub Actions Token Claims'
+          cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
+
+          echo 'Vault Login Response'
+          curl -sSLf -X POST -H "Content-Type: application/json" -H "X-Vault-Namespace: admin" --data @token.json $VAULT_URL/v1/auth/$VAULT_AUTH_PATH/login
+
+          # Remove the token file when we're done (if we don't fail)
+          rm ./token.json
+      env:
+        VAULT_URL: ${{ secrets.VAULT_ADDR }}
+        VAULT_AUTH_PATH: jwt
+        VAULT_ROLE: ${{ secrets.VAULT_ROLE }}
 
       - name: Retrieve Secrets
         id: secretdata
