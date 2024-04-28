@@ -62,6 +62,10 @@ output "aws-three-tier-web-lb-id" {
     value = aws_lb.three-tier-web-lb.id
 } 
 
+output "aws-three-tier-web-lb-dns-name" {
+    value = aws_lb.three-tier-web-lb.dns_name
+}
+
 output "aws-three-tier-web-lb-tg-arn" {
     value = aws_lb_target_group.three-tier-web-lb-tg.arn
 }
