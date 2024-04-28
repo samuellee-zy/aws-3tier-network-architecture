@@ -25,7 +25,7 @@ permissions:
 env:
   TF_CLOUD_ORGANIZATION: "samuellee-dev" ## Name of your existing Terraform Cloud Organization. RECOMMENDED: use repository variables. ex. "${{ vars.TF_CLOUD_ORGANIZATION }}"
   #TF_API_TOKEN: "${{ secrets.VAULT_SECRET_KEY }}" ## Terraform Cloud API Token. RECOMMENDED: replace with github action secrets. ex. "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "aws-network-architecture-test" ## Name of your existing workspace in Terraform Cloud.
+  TF_WORKSPACE: "aws-3tier-network-architecture" ## Name of your existing workspace in Terraform Cloud.
   CONFIG_DIRECTORY: "./" ## Directory of your Terraform Configuration. Relative to the project root.
   VAULT_URL: ${{ secrets.VAULT_ADDR }}
   VAULT_AUTH_PATH: jwt
