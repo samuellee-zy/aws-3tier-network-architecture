@@ -1,11 +1,11 @@
 terraform {
-  cloud {
-    organization = "samuellee-dev"
-    workspaces {
-      project = "AWS"
-      name = "aws-network-architecture-test"
-    }
-  }
+  # cloud {
+  #   organization = "samuellee-dev"
+  #   workspaces {
+  #     project = "AWS"
+  #     name = "aws-network-architecture-test"
+  #   }
+  # }
 
   required_providers {
     aws = {
