@@ -7,7 +7,7 @@ variable "region" {
 variable "name" {
     type = string
     description = "Name to tag resources with"
-    default = "three-tier-test"
+    default = "three-tier-anz"
 }
 
 variable "tfe-org-name" {
